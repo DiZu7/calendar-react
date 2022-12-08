@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import Modal from '../modal/Modal';
 
 import './header.scss';
 
-const Header = ({ goNextWeek, goPrevWeek, goToday, month }) => {
+const Header = ({ goNextWeek, goPrevWeek, goToday, month, createEvent }) => {
   return (
     <header className="header">
-      <button className="button create-event-btn">
-        <i className="fas fa-plus create-event-btn__icon"></i>Create
+      <button className="button create-event-btn" onClick={createEvent}>
+        <i className="fas fa-plus create-event-btn__icon"></i>
+        Create
       </button>
       <div className="navigation">
         <button className="navigation__today-btn button" onClick={goToday}>
