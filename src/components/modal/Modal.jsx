@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import moment from 'moment/moment';
 
 import './modal.scss';
 
@@ -42,7 +41,7 @@ class Modal extends React.Component {
     });
   };
 
-  handleEventCreate = () => {
+  handleEventCreate = e => {
     this.props.onCreateEvent(this.state);
   };
   render() {
@@ -53,7 +52,13 @@ class Modal extends React.Component {
             <button className="create-event__close-btn" onClick={this.props.closeModal}>
               +
             </button>
-            <form className="event-form" onSubmit={this.handleEventCreate}>
+            <form
+              className="event-form"
+              onSubmit={e => {
+                this.handleEventCreate();
+                e.preventDefault();
+              }}
+            >
               <input
                 type="text"
                 name="title"

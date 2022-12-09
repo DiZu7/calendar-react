@@ -39,6 +39,11 @@ const App = () => {
     setEvents(updatedEventsList);
   };
 
+  const handleDelete = id => {
+    const updatedEvents = eventsList.filter(event => event.id !== id);
+    setEvents(updatedEvents);
+  };
+
   return (
     <>
       <Header
@@ -52,7 +57,7 @@ const App = () => {
         goToday={() => setWeekStartDate(new Date())}
         createEvent={() => setVisibility(true)}
       />
-      <Calendar weekDates={weekDates} events={eventsList} />
+      <Calendar weekDates={weekDates} events={eventsList} onDelete={handleDelete} />
       {isModalVisible && (
         <Modal closeModal={() => setVisibility(false)} onCreateEvent={onCreateEvent} />
       )}
