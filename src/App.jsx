@@ -1,12 +1,9 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import './common.scss';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
-import moment from 'moment/moment.js';
 import events from './gateway/events';
-
 import { getWeekStartDate, generateWeekRange, months } from '../src/utils/dateUtils.js';
-
-import './common.scss';
 import Modal from './components/modal/Modal.jsx';
 
 const App = () => {
@@ -24,7 +21,7 @@ const App = () => {
 
   const [eventsList, setEvents] = useState(events);
 
-  const onCreateEvent = newEvent => {
+  const handleCreateEvent = newEvent => {
     const { title, date, startTime, endTime, description } = newEvent;
     const event = {
       id: Math.random(),
@@ -59,7 +56,7 @@ const App = () => {
       />
       <Calendar weekDates={weekDates} events={eventsList} onDelete={handleDelete} />
       {isModalVisible && (
-        <Modal closeModal={() => setVisibility(false)} onCreateEvent={onCreateEvent} />
+        <Modal closeModal={() => setVisibility(false)} onCreateEvent={handleCreateEvent} />
       )}
     </>
   );

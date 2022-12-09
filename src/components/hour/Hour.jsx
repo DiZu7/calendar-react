@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Event from '../event/Event';
 import { formatMins } from '../../../src/utils/dateUtils.js';
 
-const Hour = ({ dataHour, hourEvents, onDelete }) => {
+const Hour = ({ dataHour, hourEvents, onDelete, currentDate }) => {
   return (
     <div className="calendar__time-slot" data-time={dataHour + 1}>
+      {currentDate && currentDate.getHours() === dataHour && (
+        <div style={{ marginTop: currentDate.getMinutes() }} className="red-line"></div>
+      )}
       {/* if no events in the current hour nothing will render here */}
       {hourEvents.map(({ id, dateFrom, dateTo, title }) => {
         const eventStart = `${dateFrom.getHours()}:${formatMins(dateFrom.getMinutes())}`;
