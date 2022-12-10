@@ -6,6 +6,8 @@ import events from './gateway/events';
 import { getWeekStartDate, generateWeekRange, months } from '../src/utils/dateUtils.js';
 import Modal from './components/modal/Modal.jsx';
 
+const baseUrl = 'https://63597995ff3d7bddb9a34f03.mockapi.io/api/v1/events';
+
 const App = () => {
   const [weekStartDate, setWeekStartDate] = useState(new Date());
 
@@ -21,7 +23,7 @@ const App = () => {
 
   const [eventsList, setEvents] = useState(events);
 
-  const handleCreateEvent = newEvent => {
+  const onCreateEvent = newEvent => {
     const { title, date, startTime, endTime, description } = newEvent;
     const event = {
       id: Math.random(),
@@ -56,7 +58,7 @@ const App = () => {
       />
       <Calendar weekDates={weekDates} events={eventsList} onDelete={handleDelete} />
       {isModalVisible && (
-        <Modal closeModal={() => setVisibility(false)} onCreateEvent={handleCreateEvent} />
+        <Modal closeModal={() => setVisibility(false)} onCreateEvent={onCreateEvent} />
       )}
     </>
   );
