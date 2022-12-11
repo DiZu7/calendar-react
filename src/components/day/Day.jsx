@@ -7,6 +7,7 @@ const Day = ({ dataDay, dayEvents, onDelete, currentDate }) => {
   const hours = Array(24)
     .fill()
     .map((val, index) => index);
+  // console.log(currentDate);
 
   return (
     <div className="calendar__day" data-day={dataDay}>
@@ -20,7 +21,7 @@ const Day = ({ dataDay, dayEvents, onDelete, currentDate }) => {
             dataHour={hour}
             hourEvents={hourEvents}
             onDelete={onDelete}
-            currentDate={currentDate && currentDate.getDate() === dataDay ? currentDate : null}
+            currentDate={currentDate}
           />
         );
       })}

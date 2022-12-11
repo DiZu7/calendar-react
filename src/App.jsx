@@ -5,12 +5,10 @@ import Calendar from './components/calendar/Calendar.jsx';
 import { getWeekStartDate, generateWeekRange, months } from '../src/utils/dateUtils.js';
 import Modal from './components/modal/Modal.jsx';
 import { fetchEventsList, createEvent, deleteEvent } from './gateway/eventsGateway';
-import moment from 'moment/moment';
 
 const App = () => {
   const [weekStartDate, setWeekStartDate] = useState(new Date());
 
-  console.log(weekStartDate);
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
   const weekStartMonth = months[weekDates[0].getMonth()];
   const weekEndMonth = months[weekDates[6].getMonth()];
