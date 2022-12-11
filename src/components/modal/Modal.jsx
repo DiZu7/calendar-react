@@ -54,10 +54,7 @@ class Modal extends React.Component {
             </button>
             <form
               className="event-form"
-              onSubmit={e => {
-                e.preventDefault();
-                this.handleEventCreate();
-              }}
+              onSubmit={this.handleEventCreate}
             >
               <input
                 type="text"
