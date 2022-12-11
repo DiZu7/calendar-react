@@ -5,8 +5,7 @@ import Calendar from './components/calendar/Calendar.jsx';
 import events from './gateway/events';
 import { getWeekStartDate, generateWeekRange, months } from '../src/utils/dateUtils.js';
 import Modal from './components/modal/Modal.jsx';
-
-const baseUrl = 'https://63949f6986829c49e8225bf8.mockapi.io/api/v1/events';
+import { fetchEventsList, createEvent, deleteEvent } from './gateway/eventsGateway';
 
 const App = () => {
   const [weekStartDate, setWeekStartDate] = useState(new Date());
@@ -24,17 +23,12 @@ const App = () => {
   const [eventsList, setEvents] = useState([]);
 
   useEffect(() => {
-    fetch(baseUrl)
-      .then(response => response.json())
-      .then(newEventsList =>
-        newEventsList.map(event => ({
-          ...event,
-          dateFrom: new Date(event.dateFrom),
-          dateTo: new Date(event.dateTo),
-        })),
-      )
-      .then(eventsList => setEvents(eventsList));
+    fetchEvents();
   }, []);
+
+  const fetchEvents = () => {
+    fetchEventsList().then(eventsList => setEvents(eventsList));
+  };
 
   const onCreateEvent = newEvent => {
     const { title, date, startTime, endTime, description } = newEvent;
@@ -45,52 +39,11 @@ const App = () => {
       dateTo: new Date(`${date}T${endTime}`),
     };
 
-    fetch(baseUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(createdEvent),
-    }).then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to create new event');
-      }
-
-      fetch(baseUrl)
-        .then(res => res.json())
-        .then(newEventsList =>
-          newEventsList.map(event => ({
-            ...event,
-            dateFrom: new Date(event.dateFrom),
-            dateTo: new Date(event.dateTo),
-          })),
-        )
-        .then(eventsList => setEvents(eventsList));
-    });
+    createEvent(createdEvent).then(() => fetchEvents());
   };
 
   const handleDelete = eventId => {
-    // const updatedEvents = eventsList.filter(event => event.id !== eventId);
-
-    fetch(`${baseUrl}/${eventId}`, {
-      method: 'DELETE',
-    }).then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to create new event');
-      }
-
-      fetch(baseUrl)
-        .then(res => res.json())
-        .then(newEventsList =>
-          newEventsList.map(event => ({
-            ...event,
-            dateFrom: new Date(event.dateFrom),
-            dateTo: new Date(event.dateTo),
-          })),
-        )
-        .then(eventsList => setEvents(eventsList));
-    });
-    // setEvents(updatedEvents);
+    deleteEvent(eventId).then(() => fetchEvents());
   };
 
   return (

@@ -11,39 +11,13 @@ class Modal extends React.Component {
     endTime: '',
   };
 
-  handleTitleChange = e => {
+  handleChange = e => {
+    const { name, value } = e.target;
     this.setState({
-      title: e.target.value,
+      [name]: value,
     });
   };
 
-  handleDateChange = e => {
-    this.setState({
-      date: e.target.value,
-    });
-  };
-
-  handleStartTimeChange = e => {
-    this.setState({
-      startTime: e.target.value,
-    });
-  };
-
-  handleEndTimeChange = e => {
-    this.setState({
-      endTime: e.target.value,
-    });
-  };
-
-  handleDescriptionChange = e => {
-    this.setState({
-      description: e.target.value,
-    });
-  };
-
-  handleEventCreate = e => {
-    this.props.onCreateEvent(this.state);
-  };
   render() {
     return (
       <div className="modal overlay">
@@ -54,7 +28,10 @@ class Modal extends React.Component {
             </button>
             <form
               className="event-form"
-              onSubmit={this.handleEventCreate}
+              onSubmit={e => {
+                e.preventDefault();
+                this.props.onCreateEvent(this.state);
+              }}
             >
               <input
                 type="text"
@@ -62,7 +39,7 @@ class Modal extends React.Component {
                 placeholder="Title"
                 className="event-form__field"
                 value={this.state.title}
-                onChange={this.handleTitleChange}
+                onChange={this.handleChange}
               />
               <div className="event-form__time">
                 <input
@@ -70,14 +47,14 @@ class Modal extends React.Component {
                   name="date"
                   className="event-form__field"
                   value={this.state.date}
-                  onChange={this.handleDateChange}
+                  onChange={this.handleChange}
                 />
                 <input
                   type="time"
                   name="startTime"
                   className="event-form__field"
                   value={this.state.startTime}
-                  onChange={this.handleStartTimeChange}
+                  onChange={this.handleChange}
                 />
                 <span>-</span>
                 <input
@@ -85,7 +62,7 @@ class Modal extends React.Component {
                   name="endTime"
                   className="event-form__field"
                   value={this.state.endTime}
-                  onChange={this.handleEndTimeChange}
+                  onChange={this.handleChange}
                 />
               </div>
               <textarea
@@ -93,9 +70,13 @@ class Modal extends React.Component {
                 placeholder="Description"
                 className="event-form__field"
                 value={this.state.description}
-                onChange={this.handleDescriptionChange}
+                onChange={this.handleChange}
               ></textarea>
-              <button type="submit" className="event-form__submit-btn">
+              <button
+                type="submit"
+                className="event-form__submit-btn"
+                // onClick={this.props.closeModal}
+              >
                 Create
               </button>
             </form>
