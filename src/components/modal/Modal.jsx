@@ -1,90 +1,91 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 
 import './modal.scss';
 
-class Modal extends React.Component {
-  state = {
+const Modal = ({ closeModal, onCreateEvent }) => {
+  const [state, setState] = useState({
     title: '',
     description: '',
     date: '',
     startTime: '',
     endTime: '',
-  };
+  });
 
-  handleChange = e => {
+  const handleChange = e => {
     const { name, value } = e.target;
-    this.setState({
+    setState({
+      ...state,
       [name]: value,
     });
   };
 
-  render() {
-    return (
-      <div className="modal overlay">
-        <div className="modal__content">
-          <div className="create-event">
-            <button className="create-event__close-btn" onClick={this.props.closeModal}>
-              +
-            </button>
-            <form
-              className="event-form"
-              onSubmit={e => {
-                e.preventDefault();
-                this.props.onCreateEvent(this.state);
-              }}
-            >
+  const { title, description, date, startTime, endTime } = state;
+
+  return (
+    <div className="modal overlay">
+      <div className="modal__content">
+        <div className="create-event">
+          <button className="create-event__close-btn" onClick={closeModal}>
+            +
+          </button>
+          <form
+            className="event-form"
+            onSubmit={e => {
+              e.preventDefault();
+              onCreateEvent(state);
+            }}
+          >
+            <input
+              type="text"
+              name="title"
+              placeholder="Title"
+              className="event-form__field"
+              value={title}
+              onChange={handleChange}
+            />
+            <div className="event-form__time">
               <input
-                type="text"
-                name="title"
-                placeholder="Title"
+                type="date"
+                name="date"
                 className="event-form__field"
-                value={this.state.title}
-                onChange={this.handleChange}
+                value={date}
+                onChange={handleChange}
               />
-              <div className="event-form__time">
-                <input
-                  type="date"
-                  name="date"
-                  className="event-form__field"
-                  value={this.state.date}
-                  onChange={this.handleChange}
-                />
-                <input
-                  type="time"
-                  name="startTime"
-                  className="event-form__field"
-                  value={this.state.startTime}
-                  onChange={this.handleChange}
-                />
-                <span>-</span>
-                <input
-                  type="time"
-                  name="endTime"
-                  className="event-form__field"
-                  value={this.state.endTime}
-                  onChange={this.handleChange}
-                />
-              </div>
-              <textarea
-                name="description"
-                placeholder="Description"
+              <input
+                type="time"
+                name="startTime"
                 className="event-form__field"
-                value={this.state.description}
-                onChange={this.handleChange}
-              ></textarea>
-              <button
-                type="submit"
-                className="event-form__submit-btn"
-                // onClick={this.props.closeModal}
-              >
-                Create
-              </button>
-            </form>
-          </div>
+                value={startTime}
+                onChange={handleChange}
+              />
+              <span>-</span>
+              <input
+                type="time"
+                name="endTime"
+                className="event-form__field"
+                value={endTime}
+                onChange={handleChange}
+              />
+            </div>
+            <textarea
+              name="description"
+              placeholder="Description"
+              className="event-form__field"
+              value={description}
+              onChange={handleChange}
+            ></textarea>
+            <button
+              type="submit"
+              className="event-form__submit-btn"
+              onClick={() => setTimeout(() => closeModal(), 1000)}
+            >
+              Create
+            </button>
+          </form>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Modal;

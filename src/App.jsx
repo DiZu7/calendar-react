@@ -2,23 +2,37 @@ import React, { useEffect, useState } from 'react';
 import './common.scss';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
-import events from './gateway/events';
 import { getWeekStartDate, generateWeekRange, months } from '../src/utils/dateUtils.js';
 import Modal from './components/modal/Modal.jsx';
 import { fetchEventsList, createEvent, deleteEvent } from './gateway/eventsGateway';
+import moment from 'moment/moment';
 
 const App = () => {
   const [weekStartDate, setWeekStartDate] = useState(new Date());
 
+  console.log(weekStartDate);
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
-
-  const weekStartMonth = months[weekStartDate.getMonth()];
+  const weekStartMonth = months[weekDates[0].getMonth()];
   const weekEndMonth = months[weekDates[6].getMonth()];
-
   const currentMonth =
     weekStartMonth === weekEndMonth ? weekStartMonth : `${weekStartMonth} - ${weekEndMonth}`;
 
   const [isModalVisible, setVisibility] = useState(false);
+  const toggleModalStatus = () => {
+    setVisibility(!isModalVisible);
+  };
+
+  const goPrevWeek = () => {
+    setWeekStartDate(new Date(weekStartDate.setDate(weekStartDate.getDate() - 7)));
+  };
+
+  const goNextWeek = () => {
+    setWeekStartDate(new Date(weekStartDate.setDate(weekStartDate.getDate() + 7)));
+  };
+
+  const goToday = () => {
+    setWeekStartDate(new Date());
+  };
 
   const [eventsList, setEvents] = useState([]);
 
@@ -50,19 +64,13 @@ const App = () => {
     <>
       <Header
         month={currentMonth}
-        goPrevWeek={() =>
-          setWeekStartDate(new Date(weekStartDate.setDate(weekStartDate.getDate() - 7)))
-        }
-        goNextWeek={() =>
-          setWeekStartDate(new Date(weekStartDate.setDate(weekStartDate.getDate() + 7)))
-        }
-        goToday={() => setWeekStartDate(new Date())}
-        createEvent={() => setVisibility(true)}
+        goPrevWeek={goPrevWeek}
+        goNextWeek={goNextWeek}
+        goToday={goToday}
+        openModal={toggleModalStatus}
       />
       <Calendar weekDates={weekDates} events={eventsList} onDelete={handleDelete} />
-      {isModalVisible && (
-        <Modal closeModal={() => setVisibility(false)} onCreateEvent={onCreateEvent} />
-      )}
+      {isModalVisible && <Modal closeModal={toggleModalStatus} onCreateEvent={onCreateEvent} />}
     </>
   );
 };
