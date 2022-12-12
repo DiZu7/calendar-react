@@ -8,8 +8,8 @@ export const fetchEventsList = () => {
       }
       return response.json();
     })
-    .then(newEventsList =>
-      newEventsList.map(event => ({
+    .then(eventsList =>
+      eventsList.map(event => ({
         ...event,
         dateFrom: new Date(event.dateFrom),
         dateTo: new Date(event.dateTo),

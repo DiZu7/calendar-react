@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import Modal from '../modal/Modal';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import './header.scss';
 
 const Header = ({ goNextWeek, goPrevWeek, goToday, month, openModal }) => {
@@ -24,6 +23,14 @@ const Header = ({ goNextWeek, goPrevWeek, goToday, month, openModal }) => {
       </div>
     </header>
   );
+};
+
+Header.propTypes = {
+  goNextWeek: PropTypes.func.isRequired,
+  goPrevWeek: PropTypes.func.isRequired,
+  goToday: PropTypes.func.isRequired,
+  month: PropTypes.string.isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
 export default Header;

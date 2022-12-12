@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DeleteEvent from '../deleteModal/DeleteEvent';
-
 import './event.scss';
+import PropTypes from 'prop-types';
 
 const Event = ({ height, marginTop, title, time, id, onDelete }) => {
   const [isDeleteModalVisible, setDeleteModalVisibility] = useState(false);
@@ -21,6 +21,15 @@ const Event = ({ height, marginTop, title, time, id, onDelete }) => {
       {isDeleteModalVisible && <DeleteEvent id={id} onDelete={onDelete} />}
     </div>
   );
+};
+
+Event.propTypes = {
+  height: PropTypes.number,
+  marginTop: PropTypes.number,
+  title: PropTypes.string,
+  time: PropTypes.string,
+  id: PropTypes.string,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default Event;

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import './modal.scss';
 
 const Modal = ({ closeModal, onCreateEvent }) => {
@@ -77,7 +76,7 @@ const Modal = ({ closeModal, onCreateEvent }) => {
             <button
               type="submit"
               className="event-form__submit-btn"
-              onClick={() => setTimeout(() => closeModal(), 1000)}
+              // onClick={() => setTimeout(() => closeModal(), 1000)}
             >
               Create
             </button>

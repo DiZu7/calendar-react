@@ -1,4 +1,4 @@
-export const getWeekStartDate = (date) => {
+export const getWeekStartDate = date => {
   const dateCopy = new Date(date);
   const dayOfWeek = dateCopy.getDay();
   const difference =
@@ -10,13 +10,19 @@ export const getWeekStartDate = (date) => {
   return new Date(monday.getFullYear(), monday.getMonth(), monday.getDate());
 };
 
-export const generateWeekRange = (startDate) => {
+export const generateWeekRange = startDate => {
   const result = [];
   for (let i = 0; i < 7; i += 1) {
     const base = new Date(startDate);
     result.push(new Date(base.setDate(base.getDate() + i)));
   }
   return result;
+};
+
+export const getCurrentMonth = weekDates => {
+  const weekStartMonth = months[weekDates[0].getMonth()];
+  const weekEndMonth = months[weekDates[6].getMonth()];
+  return weekStartMonth === weekEndMonth ? weekStartMonth : `${weekStartMonth} - ${weekEndMonth}`;
 };
 
 export const getDateTime = (date, time) => {
@@ -26,7 +32,7 @@ export const getDateTime = (date, time) => {
   return withMinutes;
 };
 
-export const formatMins = (mins) => {
+export const formatMins = mins => {
   return mins < 10 ? `0${mins}` : mins;
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
-
 import './deleteEvent.scss';
+import PropTypes from 'prop-types';
 
 const DeleteEvent = ({ id, onDelete }) => {
   return (
@@ -12,5 +12,12 @@ const DeleteEvent = ({ id, onDelete }) => {
     </div>
   );
 };
+
+
+DeleteEvent.propTypes = {
+  id: PropTypes.string,
+  onDelete: PropTypes.func.isRequired,
+};
+
 
 export default DeleteEvent;
