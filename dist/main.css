@@ -9,5 +9,5 @@
 .calendar__time-slot{height:59px;position:relative;border-bottom:1px solid #eee}
 .calendar__day{position:relative;flex:1;border-left:1px solid #eee}
 .calendar__week{display:flex;flex:1}
-.calendar__time-scale{height:100%;width:48px}.time-slot{height:60px;width:48px;text-align:right}.time-slot__time{font-size:12px;opacity:.7;top:-12px;margin-right:4px}
+.calendar__time-scale{height:100%;width:48px}.time-slot{height:60px;width:48px;text-align:right}.time-slot__time{position:relative;font-size:12px;opacity:.7;top:-12px;margin-right:4px}
 .create-event{display:flex;flex-direction:column}.create-event__close-btn{margin-left:auto;transform:rotate(45deg) scale(2);outline:none;border:none;cursor:pointer;border-radius:50%;width:24px;height:24px;background:rgba(0,0,0,0)}.event-form{display:flex;flex-direction:column}.event-form__field{margin:8px;border:none}.event-form__submit-btn{margin:8px;margin-left:auto;border:none;color:#fff;background-color:#6495ed;border:none;padding:8px 16px;border-radius:8px}

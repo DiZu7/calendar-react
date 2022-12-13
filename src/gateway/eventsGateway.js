@@ -4,7 +4,7 @@ export const fetchEventsList = () => {
   return fetch(baseUrl)
     .then(response => {
       if (!response.ok) {
-        alert("Internal Server Error. Can't display events GET");
+        alert("Internal Server Error. Can't display events");
       }
       return response.json();
     })
@@ -26,7 +26,7 @@ export const createEvent = eventData => {
     body: JSON.stringify(eventData),
   }).then(response => {
     if (!response.ok) {
-      alert("Internal Server Error. Can't display events POST");
+      alert("Internal Server Error. Can't display events");
     }
   });
 };
@@ -36,7 +36,7 @@ export const deleteEvent = eventId => {
     method: 'DELETE',
   }).then(response => {
     if (!response.ok) {
-      alert("Internal Server Error. Can't display events DELETE");
+      alert("Internal Server Error. Can't display events");
     }
   });
 };

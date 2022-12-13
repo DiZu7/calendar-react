@@ -4,7 +4,6 @@ import './week.scss';
 import PropTypes from 'prop-types';
 
 const Week = ({ weekDates, events, onDelete }) => {
-  // const currentDate = new Date();
   return (
     <div className="calendar__week">
       {weekDates.map(dayStart => {
@@ -23,7 +22,6 @@ const Week = ({ weekDates, events, onDelete }) => {
             dataDay={dayStart.getDate()}
             dayEvents={dayEvents}
             onDelete={onDelete}
-            // currentDate={currentDate.toDateString() === dayStart.toDateString() && currentDate}
             currentDate={currentDate}
           />
         );
