@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "test": "jest",
+    "lint": "eslint src",
     "start": "webpack serve --mode=development --devtool source-map",
     "build": "webpack --mode=production"
   },

@@ -1,8 +1,10 @@
+@import './src/styles/variables.scss';
+
 .calendar {
   &__header {
     display: flex;
     height: 100px;
-    padding-left: 48px;
+    padding-left: $unit * 6;
   }
 
   &__day-label {
@@ -34,11 +36,11 @@
   }
 
   &__day-name_current {
-    color: cornflowerblue;
+    color: $color-cornflowerblue;
   }
 
   &__day-number_current {
-    color: #fff;
-    background-color: cornflowerblue;
+    color: $color-white;
+    background-color: $color-cornflowerblue;
   }
 }

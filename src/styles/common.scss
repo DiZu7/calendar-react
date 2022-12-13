@@ -1,10 +1,12 @@
+@import './variables.scss';
+
 .button {
   height: 40px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  border-radius: $unit;
+  border: 1px solid $border-color;
   outline: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: $unit * 2;
   font-weight: 500;
 }
 
@@ -22,10 +24,10 @@
   align-items: center;
 
   &__content {
-    background: #fff;
-    padding: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    background: $color-white;
+    padding: $unit * 2;
+    border: 1px solid $border-color;
+    border-radius: $unit;
   }
 }
 
@@ -42,10 +44,10 @@
 .popup {
   &__content {
     position: absolute;
-    background: #fff;
-    padding: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    background: $color-white;
+    padding: $unit * 2;
+    border: 1px solid $border-color;
+    border-radius: $unit;
   }
 }
 

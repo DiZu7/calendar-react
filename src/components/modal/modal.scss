@@ -1,3 +1,5 @@
+@import './src/styles/variables.scss';
+
 .create-event {
   display: flex;
   flex-direction: column;
@@ -9,8 +11,8 @@
     border: none;
     cursor: pointer;
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    width: $unit * 3;
+    height: $unit * 3;
     background: transparent;
   }
 }
@@ -20,18 +22,18 @@
   flex-direction: column;
 
   &__field {
-    margin: 8px;
+    margin: $unit;
     border: none;
   }
 
   &__submit-btn {
-    margin: 8px;
+    margin: $unit;
     margin-left: auto;
     border: none;
-    color: #fff;
-    background-color: cornflowerblue;
+    color: $color-white;
+    background-color: $color-cornflowerblue;
     border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
+    padding: $unit $unit * 2;
+    border-radius: $unit;
   }
 }

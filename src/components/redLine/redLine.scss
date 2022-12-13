@@ -1,7 +1,9 @@
+@import './src/styles/variables.scss';
+
 .red-line {
   position: absolute;
   width: 100%;
-  border-top: 2px solid red;
+  border-top: 2px solid $color-red;
   z-index: 5;
 
   &:before {
@@ -13,6 +15,6 @@
     left: -6px;
     position: absolute;
     content: '';
-    background-color: red;
+    background-color: $color-red;
   }
 }

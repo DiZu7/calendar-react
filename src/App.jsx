@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './common.scss';
+import './styles/common.scss';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
 import {

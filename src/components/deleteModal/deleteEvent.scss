@@ -1,13 +1,15 @@
+@import './src/styles/variables.scss';
+
 .delete-event {
   &__btn {
-    padding: 0 16px;
+    padding: 0 $unit * 2;
     border: none;
-    background-color: #fff;
+    background-color: $color-white;
     box-shadow: 0px 1px 5px 0px rgba(122, 117, 122, 1);
     cursor: pointer;
   }
   &__icon {
-    margin-right: 24px;
+    margin-right: $unit * 3;
     color: #6e6e6e;
   }
 }
