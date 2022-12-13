@@ -1,6 +1,6 @@
 # Calendar Project
 
-The main aim of Calendar: to help in the planning of all events during the year, month, week.
+The main aim of the Calendar: to help in the planning of all events during the year, month, week.
 
 ### [Site link](https://meek-cascaron-e168c1.netlify.app/)
 
@@ -24,8 +24,8 @@ To run this project, install it locally using npm:
 
 ```
 npm install
-npm start (for mode development)
-npm run build (for mode production)
+npm start (for mode development bundling)
+npm run build (for mode production bundling)
 ```
 
 ### Author
