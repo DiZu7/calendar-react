@@ -2,10 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './header.scss';
 
-const Header = ({ goNextWeek, goPrevWeek, goToday, month, openModal }) => {
+const Header = ({ goNextWeek, goPrevWeek, goToday, month, openModal, setDate }) => {
   return (
     <header className="header">
-      <button className="button create-event-btn" onClick={openModal}>
+      <button
+        className="button create-event-btn"
+        onClick={() => {
+          openModal();
+          setDate(new Date());
+        }}
+      >
         <i className="fas fa-plus create-event-btn__icon"></i>
         Create
       </button>
@@ -31,6 +37,7 @@ Header.propTypes = {
   goToday: PropTypes.func.isRequired,
   month: PropTypes.string.isRequired,
   openModal: PropTypes.func.isRequired,
+  setDate: PropTypes.func.isRequired,
 };
 
 export default Header;

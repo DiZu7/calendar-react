@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment/moment';
 import './redLine.scss';
 
 const RedLine = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [marginTop, setmarginTop] = useState(moment().minutes() + moment().hours() * 60);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCurrentDate(new Date());
+      setmarginTop(moment().minutes() + moment().hours() * 60);
     }, 60000);
 
     return () => {
@@ -13,7 +15,7 @@ const RedLine = () => {
     };
   });
 
-  return <div style={{ marginTop: currentDate.getMinutes() }} className="red-line"></div>;
+  return <div style={{ marginTop }} className="red-line"></div>;
 };
 
 export default RedLine;

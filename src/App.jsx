@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './styles/common.scss';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
+import moment from 'moment/moment';
 import {
   getWeekStartDate,
   generateWeekRange,
@@ -12,45 +13,33 @@ import Modal from './components/modal/Modal.jsx';
 import { fetchEventsList, createEvent, deleteEvent } from './gateway/eventsGateway';
 
 const App = () => {
-  const [state, setState] = useState({
-    weekStartDate: new Date(),
-    isModalVisible: false,
-    eventsList: [],
-  });
-  const { weekStartDate, isModalVisible, eventsList } = state;
+  const [weekStartDate, setWeekStartDate] = useState(new Date());
 
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
   const currentMonth = getCurrentMonth(weekDates);
 
-  const toggleModalStatus = () => {
-    setState({ ...state, isModalVisible: !isModalVisible });
-  };
-
   const goPrevWeek = () => {
-    setState({
-      ...state,
-      weekStartDate: new Date(weekStartDate.setDate(weekStartDate.getDate() - 7)),
-    });
+    setWeekStartDate(new Date(weekStartDate.setDate(weekStartDate.getDate() - 7)));
   };
-
   const goNextWeek = () => {
-    setState({
-      ...state,
-      weekStartDate: new Date(weekStartDate.setDate(weekStartDate.getDate() + 7)),
-    });
+    setWeekStartDate(new Date(weekStartDate.setDate(weekStartDate.getDate() + 7)));
   };
-
   const goToday = () => {
-    setState({ ...state, weekStartDate: new Date() });
+    setWeekStartDate(new Date());
   };
 
+  const [isModalVisible, setVisibility] = useState(false);
+  const toggleVisibilityModal = () => {
+    setVisibility(!isModalVisible);
+  };
+
+  const [eventsList, setEvents] = useState([]);
   useEffect(() => {
     fetchEvents();
   }, []);
 
   const fetchEvents = () => {
-    // fetchEventsList().then(eventsList => setState({ ...state, eventsList }));
-    fetchEventsList().then(eventsList => setState({ ...state, eventsList, isModalVisible: false }));
+    fetchEventsList().then(eventsList => setEvents(eventsList));
   };
 
   const handleCreateEvent = newEvent => {
@@ -62,19 +51,24 @@ const App = () => {
       dateTo: getDateTime(date, endTime),
     };
 
-    createEvent(createdEvent).then(() => fetchEvents());
-    // createEvent(createdEvent).then(() =>
-    //   fetchEventsList().then(eventsList =>
-    //     setState({ ...state, eventsList, isModalVisible: !isModalVisible }),
-    //   ),
-    // );
+    createEvent(createdEvent).then(() => {
+      fetchEvents();
+      toggleVisibilityModal();
+    });
   };
 
   const handleDelete = eventId => {
     deleteEvent(eventId).then(() => fetchEvents());
   };
 
-  console.log(1);
+
+  const [currentDate, setDate] = useState(new Date());
+  const getOnClickDate = e => {
+    const startHour = e.target.dataset.time - 1;
+    const day = e.target.closest('.calendar__day').dataset.day;
+
+    setDate(new Date(new Date().getFullYear(), new Date().getMonth(), day, startHour));
+  };
 
   return (
     <>
@@ -83,10 +77,23 @@ const App = () => {
         goPrevWeek={goPrevWeek}
         goNextWeek={goNextWeek}
         goToday={goToday}
-        openModal={toggleModalStatus}
+        openModal={toggleVisibilityModal}
+        setDate={setDate}
       />
-      <Calendar weekDates={weekDates} events={eventsList} onDelete={handleDelete} />
-      {isModalVisible && <Modal closeModal={toggleModalStatus} onCreateEvent={handleCreateEvent} />}
+      <Calendar
+        weekDates={weekDates}
+        events={eventsList}
+        onDelete={handleDelete}
+        toggleVisibilityModal={toggleVisibilityModal}
+        getOnClickDate={getOnClickDate}
+      />
+      {isModalVisible && (
+        <Modal
+          closeModal={toggleVisibilityModal}
+          onCreateEvent={handleCreateEvent}
+          currentDate={currentDate}
+        />
+      )}
     </>
   );
 };

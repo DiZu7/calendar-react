@@ -14,7 +14,10 @@ const Event = ({ height, marginTop, title, time, id, onDelete }) => {
     <div
       style={eventStyle}
       className="event"
-      onClick={() => setDeleteModalVisibility(!isDeleteModalVisible)}
+      onClick={e => {
+        setDeleteModalVisibility(!isDeleteModalVisible);
+        e.stopPropagation();
+      }}
     >
       <div className="event__title">{title}</div>
       <div className="event__time">{time}</div>
@@ -29,7 +32,7 @@ Event.propTypes = {
   title: PropTypes.string,
   time: PropTypes.string,
   id: PropTypes.string,
-  onDelete: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
 };
 
 export default Event;

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+import moment from 'moment/moment';
 import './modal.scss';
 
-const Modal = ({ closeModal, onCreateEvent }) => {
+const Modal = ({ closeModal, onCreateEvent, currentDate }) => {
   const [state, setState] = useState({
     title: '',
     description: '',
-    date: '',
-    startTime: '',
-    endTime: '',
+    date: moment(currentDate).format('YYYY-MM-DD'),
+    startTime: moment(currentDate).format('HH:mm'),
+    endTime: moment(currentDate).add(1, 'hours').format('HH:mm'),
   });
 
   const handleChange = e => {
@@ -73,11 +74,7 @@ const Modal = ({ closeModal, onCreateEvent }) => {
               value={description}
               onChange={handleChange}
             ></textarea>
-            <button
-              type="submit"
-              className="event-form__submit-btn"
-              // onClick={() => setTimeout(() => closeModal(), 1000)}
-            >
+            <button type="submit" className="event-form__submit-btn">
               Create
             </button>
           </form>
