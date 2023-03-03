@@ -4,30 +4,41 @@ import './week.scss';
 import PropTypes from 'prop-types';
 import moment from 'moment/moment';
 
-const Week = ({ weekDates, events, onDelete, getOnClickDate, toggleVisibilityModal }) => {
+const Week = ({ weekDates, events, setModalActive, fetchEvents, setDate }) => {
+  const getOnClickDate = e => {
+    const startHour = e.target.dataset.time - 1;
+    const date = e.target.closest('.calendar__day').dataset.day;
+    const month = e.target.closest('.calendar__day').dataset.month;
+    const year = e.target.closest('.calendar__day').dataset.year;
+    setDate(moment().set({ year, month, date, hour: startHour, minute: 0 }));
+  };
+
   return (
     <div
       className="calendar__week"
       onClick={e => {
         getOnClickDate(e);
-        toggleVisibilityModal();
+        setModalActive(true);
       }}
     >
       {weekDates.map(dayStart => {
-        const dayEnd = new Date(dayStart.getTime()).setHours(dayStart.getHours() + 24);
-        //getting all events from the day we will render
-        const dayEvents = events.filter(
-          event => event.dateFrom > dayStart && event.dateTo < dayEnd,
-        );
+        const startOfDay = moment(dayStart).set({ hour: 0, minute: 0, second: 0 }).format();
 
+        const endOfDay = moment(startOfDay).set({ hour: 24, minute: 0, second: 0 }).format();
+
+        const dayEvents = events.filter(
+          event => event.dateFrom > startOfDay && event.dateTo < endOfDay,
+        );
 
         return (
           <Day
-            key={dayStart.getDate()}
-            dataDay={dayStart.getDate()}
+            key={moment(dayStart).date()}
+            dataDay={moment(dayStart).date()}
+            dataMonth={moment(dayStart).month()}
+            dataYear={moment(dayStart).year()}
+            fetchEvents={fetchEvents}
             dayEvents={dayEvents}
-            onDelete={onDelete}
-            closeModal={toggleVisibilityModal}
+            setModalActive={setModalActive}
             isCurrentDate={moment().dayOfYear() === moment(dayStart).dayOfYear()}
           />
         );
@@ -40,8 +51,8 @@ Week.propTypes = {
   weekDates: PropTypes.array.isRequired,
   events: PropTypes.array,
   onDelete: PropTypes.func,
-  getOnClickDate: PropTypes.func.isRequired,
-  toggleVisibilityModal: PropTypes.func.isRequired,
+  setDate: PropTypes.func.isRequired,
+  setModalActive: PropTypes.func.isRequired,
 };
 
 export default Week;

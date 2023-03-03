@@ -1,15 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './header.scss';
+import moment from 'moment';
+import { getCurrentMonth } from '../../utils/dateUtils';
 
-const Header = ({ goNextWeek, goPrevWeek, goToday, month, openModal, setDate }) => {
+const Header = ({ setModalActive, setDate, weekStartDate, setWeekStartDate }) => {
+  const goPrevWeek = () => {
+    setWeekStartDate(moment(weekStartDate).subtract(7, 'day'));
+  };
+
+  const goNextWeek = () => {
+    setWeekStartDate(moment(weekStartDate).add(7, 'day'));
+  };
+
+  const goToday = () => {
+    setWeekStartDate(moment().format());
+  };
+
+  const currentMonth = getCurrentMonth(weekStartDate);
+
   return (
     <header className="header">
       <button
         className="button create-event-btn"
         onClick={() => {
-          openModal();
-          setDate(new Date());
+          setModalActive(true);
+          setDate(moment().format());
         }}
       >
         <i className="fas fa-plus create-event-btn__icon"></i>
@@ -25,18 +41,14 @@ const Header = ({ goNextWeek, goPrevWeek, goToday, month, openModal, setDate }) 
         <button className="icon-button navigation__nav-icon" onClick={goNextWeek}>
           <i className="fas fa-chevron-right"></i>
         </button>
-        <span className="navigation__displayed-month">{month}</span>
+        <span className="navigation__displayed-month">{currentMonth}</span>
       </div>
     </header>
   );
 };
 
 Header.propTypes = {
-  goNextWeek: PropTypes.func.isRequired,
-  goPrevWeek: PropTypes.func.isRequired,
-  goToday: PropTypes.func.isRequired,
-  month: PropTypes.string.isRequired,
-  openModal: PropTypes.func.isRequired,
+  setModalActive: PropTypes.func.isRequired,
   setDate: PropTypes.func.isRequired,
 };
 

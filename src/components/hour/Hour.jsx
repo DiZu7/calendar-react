@@ -1,28 +1,26 @@
 import React from 'react';
 import Event from '../event/Event';
-import { formatMins } from '../../../src/utils/dateUtils.js';
 import PropTypes from 'prop-types';
 import './hour.scss';
+import moment from 'moment/moment';
 
-const Hour = ({ dataHour, hourEvents, onDelete, closeModal }) => {
+const Hour = ({ dataHour, hourEvents, fetchEvents }) => {
   return (
     <div className="calendar__time-slot" data-time={dataHour + 1}>
       {/* if no events in the current hour nothing will render here */}
       {hourEvents.map(({ id, dateFrom, dateTo, title }) => {
-        const eventStart = `${dateFrom.getHours()}:${formatMins(dateFrom.getMinutes())}`;
-        const eventEnd = `${dateTo.getHours()}:${formatMins(dateTo.getMinutes())}`;
+        const eventStart = moment(dateFrom).format('HH:mm');
+        const eventEnd = moment(dateTo).format('HH:mm');
 
         return (
           <Event
             key={id}
-            //calculating event height = duration of event in minutes
-            height={(dateTo.getTime() - dateFrom.getTime()) / (1000 * 60)}
-            marginTop={dateFrom.getMinutes()}
+            height={moment.duration(moment(dateTo).diff(moment(dateFrom))).as('minutes')}
+            marginTop={moment(dateFrom).minute()}
             time={`${eventStart} - ${eventEnd}`}
             title={title}
-            onDelete={onDelete}
-            closeModal={closeModal}
             id={id}
+            fetchEvents={fetchEvents}
           />
         );
       })}
@@ -35,7 +33,7 @@ Hour.propTypes = {
   hourEvents: PropTypes.array,
   isCurrentDate: PropTypes.bool,
   onDelete: PropTypes.func,
-  closeModal: PropTypes.func.isRequired,
+  setModalActive: PropTypes.func.isRequired,
 };
 
 export default Hour;

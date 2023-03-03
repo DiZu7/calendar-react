@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import moment from 'moment/moment';
+import { createEvent } from '../../gateway/eventsGateway';
+import { getDateTime } from '../../utils/dateUtils';
 import './modal.scss';
 
-const Modal = ({ closeModal, onCreateEvent, currentDate }) => {
+const Modal = ({ setModalActive, currentDate, fetchEvents }) => {
   const [state, setState] = useState({
     title: '',
     description: '',
@@ -19,20 +21,36 @@ const Modal = ({ closeModal, onCreateEvent, currentDate }) => {
     });
   };
 
+  const handleCreateEvent = newEvent => {
+    const { title, date, startTime, endTime, description } = newEvent;
+    console.log(newEvent);
+    const createdEvent = {
+      title,
+      description,
+      dateFrom: getDateTime(date, startTime),
+      dateTo: getDateTime(date, endTime),
+    };
+
+    createEvent(createdEvent).then(() => {
+      fetchEvents();
+      setModalActive(false);
+    });
+  };
+
   const { title, description, date, startTime, endTime } = state;
 
   return (
     <div className="modal overlay">
       <div className="modal__content">
         <div className="create-event">
-          <button className="create-event__close-btn" onClick={closeModal}>
+          <button className="create-event__close-btn" onClick={() => setModalActive(false)}>
             +
           </button>
           <form
             className="event-form"
             onSubmit={e => {
               e.preventDefault();
-              onCreateEvent(state);
+              handleCreateEvent(state);
             }}
           >
             <input
