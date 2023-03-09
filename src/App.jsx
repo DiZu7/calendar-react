@@ -6,18 +6,18 @@ import moment from 'moment/moment';
 import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
 
 const App = () => {
-  const [weekStartDate, setWeekStartDate] = useState(moment().format());
+  const [weekStartDate, setWeekStartDate] = useState(moment());
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
 
   const [isModalActive, setModalActive] = useState(false);
 
-  const [currentDate, setDate] = useState(moment().format());
+  const [selectedDate, setSelectedDate] = useState(moment());
 
   return (
     <>
       <Header
         setModalActive={setModalActive}
-        setDate={setDate}
+        setSelectedDate={setSelectedDate}
         weekStartDate={weekStartDate}
         setWeekStartDate={setWeekStartDate}
       />
@@ -25,8 +25,8 @@ const App = () => {
         weekDates={weekDates}
         setModalActive={setModalActive}
         isModalActive={isModalActive}
-        currentDate={currentDate}
-        setDate={setDate}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
       />
     </>
   );

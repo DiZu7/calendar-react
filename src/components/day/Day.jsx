@@ -34,7 +34,6 @@ const Day = ({
             hourEvents={hourEvents}
             setModalActive={setModalActive}
             fetchEvents={fetchEvents}
-            // isCurrentDate={currentDate && currentDate.getHours() === hour}
           />
         );
       })}

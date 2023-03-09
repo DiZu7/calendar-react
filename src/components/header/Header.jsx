@@ -4,7 +4,7 @@ import './header.scss';
 import moment from 'moment';
 import { getCurrentMonth } from '../../utils/dateUtils';
 
-const Header = ({ setModalActive, setDate, weekStartDate, setWeekStartDate }) => {
+const Header = ({ setModalActive, setSelectedDate, weekStartDate, setWeekStartDate }) => {
   const goPrevWeek = () => {
     setWeekStartDate(moment(weekStartDate).subtract(7, 'day'));
   };
@@ -14,10 +14,11 @@ const Header = ({ setModalActive, setDate, weekStartDate, setWeekStartDate }) =>
   };
 
   const goToday = () => {
-    setWeekStartDate(moment().format());
+    setWeekStartDate(moment());
   };
 
   const currentMonth = getCurrentMonth(weekStartDate);
+  console.log(typeof weekStartDate);
 
   return (
     <header className="header">
@@ -25,7 +26,7 @@ const Header = ({ setModalActive, setDate, weekStartDate, setWeekStartDate }) =>
         className="button create-event-btn"
         onClick={() => {
           setModalActive(true);
-          setDate(moment().format());
+          setSelectedDate(moment());
         }}
       >
         <i className="fas fa-plus create-event-btn__icon"></i>
@@ -49,7 +50,9 @@ const Header = ({ setModalActive, setDate, weekStartDate, setWeekStartDate }) =>
 
 Header.propTypes = {
   setModalActive: PropTypes.func.isRequired,
-  setDate: PropTypes.func.isRequired,
+  setSelectedDate: PropTypes.func.isRequired,
+  weekStartDate: PropTypes.object.isRequired,
+  setWeekStartDate: PropTypes.func.isRequired,
 };
 
 export default Header;

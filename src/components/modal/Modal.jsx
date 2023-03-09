@@ -2,28 +2,32 @@ import React, { useState } from 'react';
 import moment from 'moment/moment';
 import { createEvent } from '../../gateway/eventsGateway';
 import { getDateTime } from '../../utils/dateUtils';
+import PropTypes from 'prop-types';
 import './modal.scss';
 
-const Modal = ({ setModalActive, currentDate, fetchEvents }) => {
-  const [state, setState] = useState({
+const Modal = ({ setModalActive, selectedDate, fetchEvents }) => {
+  const [eventData, setEventData] = useState({
     title: '',
     description: '',
-    date: moment(currentDate).format('YYYY-MM-DD'),
-    startTime: moment(currentDate).format('HH:mm'),
-    endTime: moment(currentDate).add(1, 'hours').format('HH:mm'),
+    date: selectedDate.format('YYYY-MM-DD'),
+    startTime: selectedDate.format('HH:mm'),
+    endTime:
+      selectedDate.add(1, 'hours').format('HH:mm') === '00:00'
+        ? '23:59'
+        : selectedDate.format('HH:mm'),
   });
 
   const handleChange = e => {
     const { name, value } = e.target;
-    setState({
-      ...state,
+    setEventData({
+      ...eventData,
       [name]: value,
     });
   };
 
   const handleCreateEvent = newEvent => {
     const { title, date, startTime, endTime, description } = newEvent;
-    console.log(newEvent);
+
     const createdEvent = {
       title,
       description,
@@ -37,7 +41,7 @@ const Modal = ({ setModalActive, currentDate, fetchEvents }) => {
     });
   };
 
-  const { title, description, date, startTime, endTime } = state;
+  const { title, description, date, startTime, endTime } = eventData;
 
   return (
     <div className="modal overlay">
@@ -50,7 +54,7 @@ const Modal = ({ setModalActive, currentDate, fetchEvents }) => {
             className="event-form"
             onSubmit={e => {
               e.preventDefault();
-              handleCreateEvent(state);
+              handleCreateEvent(eventData);
             }}
           >
             <input
@@ -100,6 +104,12 @@ const Modal = ({ setModalActive, currentDate, fetchEvents }) => {
       </div>
     </div>
   );
+};
+
+Modal.propTypes = {
+  fetchEvents: PropTypes.func,
+  setModalActive: PropTypes.func.isRequired,
+  selectedDate: PropTypes.object.isRequired,
 };
 
 export default Modal;

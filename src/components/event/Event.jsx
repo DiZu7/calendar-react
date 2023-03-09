@@ -11,6 +11,7 @@ const Event = ({ height, marginTop, title, time, fetchEvents, id }) => {
     marginTop,
   };
 
+
   return (
     <div
       style={eventStyle}

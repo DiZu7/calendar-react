@@ -5,10 +5,9 @@ import Week from '../week/Week';
 import Sidebar from '../sidebar/Sidebar';
 import PropTypes from 'prop-types';
 import Modal from '../modal/Modal';
-import moment from 'moment/moment';
 import { fetchEventsList } from '../../gateway/eventsGateway';
 
-const Calendar = ({ weekDates, setModalActive, isModalActive, currentDate, setDate }) => {
+const Calendar = ({ weekDates, setModalActive, isModalActive, selectedDate, setSelectedDate }) => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
@@ -30,14 +29,14 @@ const Calendar = ({ weekDates, setModalActive, isModalActive, currentDate, setDa
             events={events}
             fetchEvents={fetchEvents}
             setModalActive={setModalActive}
-            setDate={setDate}
+            setSelectedDate={setSelectedDate}
           />
         </div>
       </div>
       {isModalActive && (
         <Modal
           setModalActive={setModalActive}
-          currentDate={currentDate}
+          selectedDate={selectedDate}
           fetchEvents={fetchEvents}
         />
       )}
@@ -45,12 +44,12 @@ const Calendar = ({ weekDates, setModalActive, isModalActive, currentDate, setDa
   );
 };
 
-// Calendar.propTypes = {
-//   weekDates: PropTypes.array.isRequired,
-//   events: PropTypes.array,
-//   onDelete: PropTypes.func.isRequired,
-//   getOnClickDate: PropTypes.func.isRequired,
-//   setModalActive: PropTypes.func,
-// };
+Calendar.propTypes = {
+  weekDates: PropTypes.array.isRequired,
+  setSelectedDate: PropTypes.func.isRequired,
+  setModalActive: PropTypes.func.isRequired,
+  isModalActive: PropTypes.bool.isRequired,
+  selectedDate: PropTypes.object.isRequired,
+};
 
 export default Calendar;
