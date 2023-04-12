@@ -18,7 +18,6 @@ const Header = ({ setModalActive, setSelectedDate, weekStartDate, setWeekStartDa
   };
 
   const currentMonth = getCurrentMonth(weekStartDate);
-  console.log(typeof weekStartDate);
 
   return (
     <header className="header">
